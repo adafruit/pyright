@@ -2142,7 +2142,7 @@ export class Parser {
                     isDictionary = true;
                 }
             } else {
-                assert(keyExpression !== undefined);
+                assert.notStrictEqual(keyExpression, undefined);
                 if (keyExpression) {
                     if (isDictionary) {
                         this._addError('Dictionary entries must contain key/value pairs', keyExpression);
@@ -2740,7 +2740,7 @@ export class Parser {
 
     private _getKeywordToken(keywordType: KeywordType): KeywordToken {
         const keywordToken = this._getNextToken() as KeywordToken;
-        assert(keywordToken.type === TokenType.Keyword);
+        assert.ok(keywordToken.type === TokenType.Keyword);
         assert.equal(keywordToken.keywordType, keywordType);
         return keywordToken;
     }
@@ -2750,7 +2750,7 @@ export class Parser {
     }
 
     private _addError(message: string, range: TextRange) {
-        assert(range !== undefined);
+        assert.ok(range !== undefined);
         this._diagSink.addError(message,
             convertOffsetsToRange(range.start, range.start + range.length,
             this._tokenizerOutput!.lines));

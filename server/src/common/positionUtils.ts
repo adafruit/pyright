@@ -30,9 +30,9 @@ export function convertOffsetToPosition(offset: number, lines: TextRangeCollecti
     }
 
     const itemIndex = lines.getItemContaining(offset);
-    assert(itemIndex >= 0 && itemIndex <= lines.length);
+    assert.ok(itemIndex >= 0 && itemIndex <= lines.length);
     const lineRange = lines.getItemAt(itemIndex);
-    assert(lineRange !== undefined);
+    assert.ok(lineRange !== undefined);
     return {
         line: itemIndex,
         column: offset - lineRange.start

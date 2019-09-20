@@ -163,6 +163,7 @@ export class SourceFile {
             // This is here to prevent the compiler from complaining
             // about an unused instance variable.
         }
+        this._console.log("constructing source file" + filePath);
         this._filePath = filePath;
         this._isStubFile = filePath.endsWith('.pyi');
         this._isTypeshedStubFile = isTypeshedStubFile;
@@ -181,6 +182,7 @@ export class SourceFile {
                 this._isBuiltInStubFile = true;
             }
         }
+        this._console.log("finished constructing source file" + filePath);
     }
 
     getFilePath(): string {
@@ -603,10 +605,10 @@ export class SourceFile {
     }
 
     bind(configOptions: ConfigOptions, builtinsScope?: Scope) {
-        assert(!this.isParseRequired());
-        assert(this.isBindingRequired());
-        assert(this._analysisJob.parseResults);
-        assert(this._analysisJob.nextPhaseToRun === AnalysisPhase.Bind);
+        assert.ok(!this.isParseRequired());
+        assert.ok(this.isBindingRequired());
+        assert.ok(this._analysisJob.parseResults);
+        assert.ok(this._analysisJob.nextPhaseToRun === AnalysisPhase.Bind);
 
         try {
             // Perform name binding.
@@ -627,11 +629,11 @@ export class SourceFile {
 
                 this._analysisJob.bindDiagnostics = fileInfo.diagnosticSink.diagnostics;
                 const moduleScope = AnalyzerNodeInfo.getScope(this._analysisJob.parseResults!.parseTree);
-                assert(moduleScope !== undefined);
+                assert.ok(moduleScope !== undefined);
                 this._analysisJob.moduleSymbolTable = moduleScope!.getSymbolTable();
                 const moduleType = AnalyzerNodeInfo.getExpressionType(
                     this._analysisJob.parseResults!.parseTree);
-                assert(moduleType && moduleType.category === TypeCategory.Module);
+                assert.ok(moduleType && moduleType.category === TypeCategory.Module);
                 this._analysisJob.moduleType = moduleType as ModuleType;
             });
         } catch (e) {
@@ -659,11 +661,11 @@ export class SourceFile {
     }
 
     doTypeAnalysis(configOptions: ConfigOptions, importMap: ImportMap) {
-        assert(!this.isParseRequired());
-        assert(!this.isBindingRequired());
-        assert(this.isTypeAnalysisRequired());
-        assert(this._analysisJob.parseResults);
-        assert(this._analysisJob.nextPhaseToRun === AnalysisPhase.TypeAnalysis);
+        assert.ok(!this.isParseRequired());
+        assert.ok(!this.isBindingRequired());
+        assert.ok(this.isTypeAnalysisRequired());
+        assert.ok(this._analysisJob.parseResults);
+        assert.ok(this._analysisJob.nextPhaseToRun === AnalysisPhase.TypeAnalysis);
 
         try {
             timingStats.typeAnalyzerTime.timeOperation(() => {
@@ -700,7 +702,7 @@ export class SourceFile {
     // This method should be called once type analysis has completed for
     // this file and all of its dependent files.
     finalizeAnalysis() {
-        assert(!this.isTypeAnalysisRequired());
+        assert.ok(!this.isTypeAnalysisRequired());
 
         // Mark the type analysis as final.
         this._analysisJob.isTypeAnalysisFinalized = true;
@@ -714,7 +716,7 @@ export class SourceFile {
     }
 
     private _buildFileInfo(configOptions: ConfigOptions, importMap?: ImportMap, builtinsScope?: Scope) {
-        assert(this._analysisJob.parseResults !== undefined);
+        assert.ok(this._analysisJob.parseResults !== undefined);
         const analysisDiagnostics = new TextRangeDiagnosticSink(this._analysisJob.parseResults!.lines);
 
         const fileInfo: AnalyzerFileInfo = {

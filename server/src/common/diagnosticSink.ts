@@ -11,10 +11,12 @@ import { Diagnostic, DiagnosticCategory, DiagnosticTextRange } from './diagnosti
 import { convertOffsetsToRange } from './positionUtils';
 import { TextRange } from './textRange';
 import { TextRangeCollection } from './textRangeCollection';
+import { ParseResults } from '../parser/parser';
 
 // Represents a collection of diagnostics within a file.
 export interface FileDiagnostics {
     filePath: string;
+    parseResults: ParseResults;
     diagnostics: Diagnostic[];
 }
 

@@ -156,7 +156,7 @@ export abstract class Binder extends ParseTreeWalker {
 
     visitModuleName(node: ModuleNameNode): boolean {
         const importResult = AnalyzerNodeInfo.getImportInfo(node);
-        assert(importResult !== undefined);
+        assert.ok(importResult !== undefined);
 
         if (importResult && !this._isUnexecutedCode) {
             if (!importResult.isImportFound) {
@@ -315,10 +315,10 @@ export abstract class Binder extends ParseTreeWalker {
 
             functionOrModuleNode = functionOrModuleNode.parent;
         }
-        assert(functionOrModuleNode !== undefined);
+        assert.ok(functionOrModuleNode !== undefined);
 
         const functionOrModuleScope = AnalyzerNodeInfo.getScope(functionOrModuleNode!);
-        assert(functionOrModuleScope !== undefined);
+        assert.ok(functionOrModuleScope !== undefined);
 
         const binder = new FunctionScopeBinder(node, functionOrModuleScope!, this._fileInfo);
         this._queueSubScopeAnalyzer(binder);
@@ -647,7 +647,7 @@ export abstract class Binder extends ParseTreeWalker {
             return;
         }
 
-        assert(this._currentScope.getType() !== ScopeType.Temporary);
+        assert.ok(this._currentScope.getType() !== ScopeType.Temporary);
         let symbol = this._currentScope.lookUpSymbol(nameValue);
 
         if (!symbol) {
@@ -839,7 +839,7 @@ export class ClassScopeBinder extends Binder {
         ClassType.setFields(classType, this._currentScope.getSymbolTable());
 
         // Bind implicit names.
-        assert(classType && classType.category === TypeCategory.Class);
+        assert.ok(classType && classType.category === TypeCategory.Class);
         this._addSymbolToCurrentScope('__class__', classType);
         this._addSymbolToCurrentScope('__dict__', AnyType.create());
         this._addSymbolToCurrentScope('__doc__', ScopeUtils.getBuiltInObject(this._currentScope, 'str'));

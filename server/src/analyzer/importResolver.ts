@@ -458,6 +458,7 @@ export class ImportResolver {
 
     private _getTypeshedPath(isStdLib: boolean, execEnv: ExecutionEnvironment,
             importFailureInfo: string[]) {
+        return undefined;
 
         // See if we have it cached.
         if (isStdLib) {
@@ -578,28 +579,28 @@ export class ImportResolver {
             const pyiFilePath = pyFilePath + 'i';
             const pydFilePath = pyFilePath + 'd';
 
-            if (fs.existsSync(pyiFilePath) && isFile(pyiFilePath)) {
-                importFailureInfo.push(`Resolved import with file '${ pyiFilePath }'`);
-                resolvedPaths.push(pyiFilePath);
-                isStubFile = true;
-            } else if (fs.existsSync(pyFilePath) && isFile(pyFilePath)) {
-                importFailureInfo.push(`Resolved import with file '${ pyFilePath }'`);
-                resolvedPaths.push(pyFilePath);
-            } else if (allowPydFile && fs.existsSync(pydFilePath) && isFile(pydFilePath)) {
-                importFailureInfo.push(`Resolved import with file '${ pydFilePath }'`);
-                resolvedPaths.push(pydFilePath);
-                isPydFile = true;
-            } else {
+            // if (fs.existsSync(pyiFilePath) && isFile(pyiFilePath)) {
+            //     importFailureInfo.push(`Resolved import with file '${ pyiFilePath }'`);
+            //     resolvedPaths.push(pyiFilePath);
+            //     isStubFile = true;
+            // } else if (fs.existsSync(pyFilePath) && isFile(pyFilePath)) {
+            //     importFailureInfo.push(`Resolved import with file '${ pyFilePath }'`);
+            //     resolvedPaths.push(pyFilePath);
+            // } else if (allowPydFile && fs.existsSync(pydFilePath) && isFile(pydFilePath)) {
+            //     importFailureInfo.push(`Resolved import with file '${ pydFilePath }'`);
+            //     resolvedPaths.push(pydFilePath);
+            //     isPydFile = true;
+            // } else {
                 importFailureInfo.push(`Partially resolved import with directory '${ dirPath }'`);
                 resolvedPaths.push(dirPath);
                 isNamespacePackage = true;
-            }
+            //}
 
             implicitImports = this._findImplicitImports(dirPath, [pyFilePath, pyiFilePath]);
         } else {
             for (let i = 0; i < moduleDescriptor.nameParts.length; i++) {
                 dirPath = combinePaths(dirPath, moduleDescriptor.nameParts[i]);
-                if (!fs.existsSync(dirPath) || !isDirectory(dirPath)) {
+                if (true || !fs.existsSync(dirPath) || !isDirectory(dirPath)) {
                     importFailureInfo.push(`Could not find directory '${ dirPath }'`);
 
                     // We weren't able to find the subdirectory. See if we can
@@ -608,21 +609,21 @@ export class ImportResolver {
                     const pyiFilePath = pyFilePath + 'i';
                     const pydFilePath = pyFilePath + 'd';
 
-                    if (fs.existsSync(pyiFilePath) && isFile(pyiFilePath)) {
-                        importFailureInfo.push(`Resolved import with file '${ pyiFilePath }'`);
-                        resolvedPaths.push(pyiFilePath);
-                        isStubFile = true;
-                    } else if (fs.existsSync(pyFilePath) && isFile(pyFilePath)) {
-                        importFailureInfo.push(`Resolved import with file '${ pyFilePath }'`);
-                        resolvedPaths.push(pyFilePath);
-                    } else if (allowPydFile && fs.existsSync(pydFilePath) && isFile(pydFilePath)) {
-                        importFailureInfo.push(`Resolved import with file '${ pydFilePath }'`);
-                        resolvedPaths.push(pydFilePath);
-                        isPydFile = true;
-                    } else {
-                        importFailureInfo.push(`Did not find file '${ pyiFilePath }',` +
-                            ` '${ pyFilePath }' or '${ pydFilePath }'`);
-                    }
+                    // if (fs.existsSync(pyiFilePath) && isFile(pyiFilePath)) {
+                    //     importFailureInfo.push(`Resolved import with file '${ pyiFilePath }'`);
+                    //     resolvedPaths.push(pyiFilePath);
+                    //     isStubFile = true;
+                    // } else if (fs.existsSync(pyFilePath) && isFile(pyFilePath)) {
+                    //     importFailureInfo.push(`Resolved import with file '${ pyFilePath }'`);
+                    //     resolvedPaths.push(pyFilePath);
+                    // } else if (allowPydFile && fs.existsSync(pydFilePath) && isFile(pydFilePath)) {
+                    //     importFailureInfo.push(`Resolved import with file '${ pydFilePath }'`);
+                    //     resolvedPaths.push(pydFilePath);
+                    //     isPydFile = true;
+                    // } else {
+                    importFailureInfo.push(`Did not find file '${ pyiFilePath }',` +
+                        ` '${ pyFilePath }' or '${ pydFilePath }'`);
+                    //}
                     break;
                 }
 

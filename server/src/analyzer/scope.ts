@@ -175,7 +175,7 @@ export class Scope {
             curScope = curScope._parent;
         }
 
-        assert(false, 'failed to find scope');
+        assert.ok(false, 'failed to find scope');
         return this;
     }
 
@@ -189,13 +189,13 @@ export class Scope {
 
     setConditional() {
         // Only temporary scopes can be conditional.
-        assert(this._scopeType === ScopeType.Temporary);
+        assert.ok(this._scopeType === ScopeType.Temporary);
         this._isConditional = true;
     }
 
     setUnconditional() {
         // Only temporary scopes can be conditional.
-        assert(this._scopeType === ScopeType.Temporary);
+        assert.ok(this._scopeType === ScopeType.Temporary);
         this._isConditional = false;
     }
 
@@ -232,7 +232,7 @@ export class Scope {
 
     addSymbolDeclaration(name: string, declaration: Declaration) {
         const symbol = this._symbolTable.get(name)!;
-        assert(symbol !== undefined);
+        assert.ok(symbol !== undefined);
 
         symbol.addDeclaration(declaration);
     }
@@ -241,7 +241,7 @@ export class Scope {
     // assumed to be its parent or a direct ancestor). Returns true if
     // a scope was modified in a meaningful way.
     mergeScope(scopeToMerge: Scope) {
-        assert(scopeToMerge.getType() === ScopeType.Temporary);
+        assert.ok(scopeToMerge.getType() === ScopeType.Temporary);
 
         // If the scope we're merging isn't conditional, transfer
         // the return and raises flags.
@@ -276,13 +276,13 @@ export class Scope {
     // Combines multiple conditional scopes -- for example, an "if" scope
     // with an "else" scope.
     static combineConditionalScopes(scopes: Scope[]): Scope {
-        assert(scopes.length > 1);
+        assert.ok(scopes.length > 1);
 
         const parentScope = scopes[0]._parent;
         for (const scope of scopes) {
-            assert(scope._isConditional);
-            assert(scope._scopeType === ScopeType.Temporary);
-            assert(scope._parent === parentScope);
+            assert.ok(scope._isConditional);
+            assert.ok(scope._scopeType === ScopeType.Temporary);
+            assert.ok(scope._parent === parentScope);
         }
 
         const combinedScope = new Scope(ScopeType.Temporary, parentScope);

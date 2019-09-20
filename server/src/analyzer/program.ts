@@ -188,7 +188,9 @@ export class Program {
                 imports: [],
                 importedBy: []
             };
+            this._console.log("bleh");
             this._addToSourceFileListAndMap(sourceFileInfo);
+            this._console.log("bleh done");
         } else {
             sourceFileInfo.isOpenByClient = true;
         }
@@ -508,7 +510,7 @@ export class Program {
             const parseResults = fileToAnalyze.builtinsImport.sourceFile.getParseResults();
             if (parseResults) {
                 builtinsScope = AnalyzerNodeInfo.getScope(parseResults.parseTree);
-                assert(builtinsScope !== undefined);
+                assert.ok(builtinsScope !== undefined);
             }
         }
 
@@ -622,7 +624,7 @@ export class Program {
 
         // Mark all files in the closure as finalized.
         Object.keys(closureMap).forEach(filePath => {
-            assert(!this._sourceFileMap[filePath].sourceFile.isAnalysisFinalized());
+            assert.ok(!this._sourceFileMap[filePath].sourceFile.isAnalysisFinalized());
 
             // Don't detect import cycles when doing type stub generation. Some
             // third-party modules are pretty convoluted.
@@ -757,7 +759,7 @@ export class Program {
         circDep.normalizeOrder();
         const firstFilePath = circDep.getPaths()[0];
         const firstSourceFile = this._sourceFileMap[firstFilePath];
-        assert(firstSourceFile !== undefined);
+        assert.ok(firstSourceFile !== undefined);
         firstSourceFile.sourceFile.addCircularDependency(circDep);
     }
 
@@ -784,8 +786,10 @@ export class Program {
             const diagnostics = sourceFileInfo.sourceFile.getDiagnostics(
                     options, sourceFileInfo.diagnosticsVersion);
             if (diagnostics !== undefined) {
+                console.log(sourceFileInfo.sourceFile);
                 fileDiagnostics.push({
                     filePath: sourceFileInfo.sourceFile.getFilePath(),
+                    parseResults: sourceFileInfo.sourceFile.getParseResults(),
                     diagnostics
                 });
 
@@ -1031,7 +1035,7 @@ export class Program {
                 // they are no longer referenced.
                 fileInfo.imports.forEach(importedFile => {
                     const indexToRemove = importedFile.importedBy.findIndex(fi => fi === fileInfo);
-                    assert(indexToRemove >= 0);
+                    assert.ok(indexToRemove >= 0);
                     importedFile.importedBy.splice(indexToRemove, 1);
 
                     // See if we need to remove the imported file because it
@@ -1212,7 +1216,8 @@ export class Program {
         const filePath = fileInfo.sourceFile.getFilePath();
 
         // We should never add a file with the same path twice.
-        assert(this._sourceFileMap[filePath] === undefined);
+        this._console.log(assert);
+        assert.strictEqual(this._sourceFileMap[filePath], undefined);
 
         this._sourceFileList.push(fileInfo);
         this._sourceFileMap[filePath] = fileInfo;

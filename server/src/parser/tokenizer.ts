@@ -596,7 +596,7 @@ export class Tokenizer {
                 const text = this._cs.getText().substr(start, this._cs.position - start);
                 const value = parseInt(text.substr(leadingChars).replace(/_/g, ''), radix);
                 if (!isNaN(value)) {
-                    this._tokens.push(NumberToken.create(start, text.length, value, true, this._getComments()));
+                    this._tokens.push(NumberToken.create(start, text.length, value, radix, true, this._getComments()));
                     return true;
                 }
             }
@@ -629,7 +629,7 @@ export class Tokenizer {
             const text = this._cs.getText().substr(start, this._cs.position - start);
             const value = parseInt(text.replace(/_/g, ''), 10);
             if (!isNaN(value)) {
-                this._tokens.push(NumberToken.create(start, text.length, value, true, this._getComments()));
+                this._tokens.push(NumberToken.create(start, text.length, value, 10, true, this._getComments()));
                 return true;
             }
         }
@@ -643,7 +643,7 @@ export class Tokenizer {
                 const value = parseFloat(text);
                 if (!isNaN(value)) {
                     this._tokens.push(NumberToken.create(start, this._cs.position - start, value,
-                        false, this._getComments()));
+                        10, false, this._getComments()));
                     return true;
                 }
             }

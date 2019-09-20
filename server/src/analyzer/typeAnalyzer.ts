@@ -136,7 +136,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
         // parameters in the binder, but if these parameters
         // are variables, they may not have been resolved at that time.
         const classType = AnalyzerNodeInfo.getExpressionType(node) as ClassType;
-        assert(classType.category === TypeCategory.Class);
+        assert.ok(classType.category === TypeCategory.Class);
 
         // Keep a list of unique type parameters that are used in the
         // base class arguments.
@@ -310,7 +310,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
             AnalyzerNodeInfo.getExpressionType(containingClassNode) as ClassType : undefined;
 
         const functionType = AnalyzerNodeInfo.getExpressionType(node) as FunctionType;
-        assert(functionType.category === TypeCategory.Function);
+        assert.ok(functionType.category === TypeCategory.Function);
 
         if (this._fileInfo.isBuiltInStubFile || this._fileInfo.isTypingStubFile) {
             // Stash away the name of the function since we need to handle
@@ -504,7 +504,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
 
         const functionScope = this._enterScope(node, () => {
             const parameters = FunctionType.getParameters(functionType);
-            assert(parameters.length === node.parameters.length);
+            assert.ok(parameters.length === node.parameters.length);
 
             // Add the parameters to the scope and bind their types.
             parameters.forEach((param, index) => {
@@ -521,7 +521,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
                             this._fileInfo.lines),
                         declaredType: specializedParamType
                     };
-                    assert(paramNode !== undefined && paramNode.name !== undefined);
+                    assert.ok(paramNode !== undefined && paramNode.name !== undefined);
 
                     // If the type contains type variables, specialize them now
                     // so we convert them to a concrete type (or unknown if there
@@ -802,7 +802,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
                 enclosingFunctionNode) as FunctionType;
 
             if (functionType) {
-                assert(functionType.category === TypeCategory.Function);
+                assert.ok(functionType.category === TypeCategory.Function);
 
                 if (FunctionType.isGenerator(functionType)) {
                     declaredReturnType = TypeUtils.getDeclaredGeneratorReturnType(functionType);
@@ -1318,7 +1318,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
 
     visitImportAs(node: ImportAsNode): boolean {
         const importInfo = AnalyzerNodeInfo.getImportInfo(node.module);
-        assert(importInfo !== undefined);
+        assert.ok(importInfo !== undefined);
 
         if (importInfo && importInfo.isImportFound && importInfo.resolvedPaths.length > 0) {
             const resolvedPath = importInfo.resolvedPaths[importInfo.resolvedPaths.length - 1];
@@ -2695,7 +2695,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
             const functionType = AnalyzerNodeInfo.getExpressionType(
                 enclosingFunctionNode) as FunctionType;
             if (functionType) {
-                assert(functionType.category === TypeCategory.Function);
+                assert.ok(functionType.category === TypeCategory.Function);
                 const iteratorType = ScopeUtils.getBuiltInType(this._currentScope, 'Iterator');
                 declaredYieldType = TypeUtils.getDeclaredGeneratorYieldType(functionType, iteratorType);
             }
@@ -2850,7 +2850,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
                         memberInfo.isInstanceMember === isInstanceMember) {
 
                     const symbol = memberFields.get(memberName);
-                    assert(symbol !== undefined);
+                    assert.ok(symbol !== undefined);
 
                     // If the type annotation node is provided, use it to generate a source ID.
                     // If an expression contains both a type annotation and an assignment, we want
@@ -3092,7 +3092,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
 
         if (cachedVersion === this._analysisVersion) {
             const cachedType = AnalyzerNodeInfo.getExpressionType(node);
-            assert(cachedType !== undefined);
+            assert.ok(cachedType !== undefined);
             AnalyzerNodeInfo.setExpressionTypeReadVersion(node, this._analysisVersion);
             return cachedType;
         }
@@ -3477,7 +3477,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
     // adds a new symbol with the specified name if it doesn't already exist.
     private _addSymbolToPermanentScope(name: string) {
         const permanentScope = ScopeUtils.getPermanentScope(this._currentScope);
-        assert(permanentScope.getType() !== ScopeType.Temporary);
+        assert.ok(permanentScope.getType() !== ScopeType.Temporary);
 
         let symbol = permanentScope.lookUpSymbol(name);
         if (!symbol) {
@@ -3535,7 +3535,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
         const enclosingClassNode = ParseTreeUtils.getEnclosingClass(node, true);
         if (enclosingClassNode) {
             const enumClass = AnalyzerNodeInfo.getExpressionType(enclosingClassNode) as ClassType;
-            assert(enumClass.category === TypeCategory.Class);
+            assert.ok(enumClass.category === TypeCategory.Class);
 
             // Handle several built-in classes specially. We don't
             // want to interpret their class variables as enumerations.
@@ -3644,7 +3644,7 @@ export class TypeAnalyzer extends ParseTreeWalker {
     private _enterScope(node: ParseNode, callback: () => void): Scope {
         const prevScope = this._currentScope;
         const newScope = AnalyzerNodeInfo.getScope(node);
-        assert(newScope !== undefined);
+        assert.ok(newScope !== undefined);
 
         // Clear the defaultValueInitializerExpression because we want
         // to allow calls within lambdas that are used to initialize

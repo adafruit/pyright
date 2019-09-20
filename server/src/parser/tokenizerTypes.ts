@@ -325,10 +325,11 @@ export interface NumberToken extends Token {
     readonly type: TokenType.Number;
     readonly value: number;
     readonly isInteger: boolean;
+    radix: number;
 }
 
 export namespace NumberToken {
-    export function create(start: number, length: number, value: number, isInteger: boolean,
+    export function create(start: number, length: number, value: number, radix: number, isInteger: boolean,
             comments: Comment[] | undefined) {
 
         const token: NumberToken = {
@@ -336,6 +337,7 @@ export namespace NumberToken {
             length,
             type: TokenType.Number,
             isInteger,
+            radix,
             value,
             comments
         };

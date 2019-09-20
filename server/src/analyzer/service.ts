@@ -66,7 +66,7 @@ export class AnalyzerService {
         this._instanceName = instanceName;
         this._console = console || new StandardConsole();
         this._program = new Program(this._console);
-        this._configOptions = new ConfigOptions(process.cwd());
+        this._configOptions = new ConfigOptions("");
         this._importResolver = new ImportResolver(this._configOptions);
         this._executionRootPath = '';
         this._typeStubTargetImportName = undefined;
@@ -99,6 +99,7 @@ export class AnalyzerService {
 
     setFileOpened(path: string, version: number | null, contents: string) {
         this._program.setFileOpened(path, version, contents);
+        this._console.log('file opened ' + path + ' ' + version);
         this._scheduleReanalysis(false);
     }
 
@@ -751,6 +752,7 @@ export class AnalyzerService {
         if (requireTrackedFileUpdate) {
             this._requireTrackedFileUpdate = true;
         }
+        this._console.log('scheduling analysis');
 
         // Remove any existing analysis timer.
         this._clearReanalysisTimer();
@@ -778,6 +780,7 @@ export class AnalyzerService {
                 this._updateTrackedFileList(false);
             }
 
+            this._console.log('running analysis');
             const moreToAnalyze = this._reanalyze();
 
             if (moreToAnalyze) {
@@ -825,6 +828,7 @@ export class AnalyzerService {
                 }
             }
         } catch (err) {
+            this._console.log(err);
             this._console.log('Error performing analysis: ' + JSON.stringify(err));
 
             if (this._onCompletionCallback) {
