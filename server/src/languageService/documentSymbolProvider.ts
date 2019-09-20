@@ -8,8 +8,8 @@
 * source file document.
 */
 
-import { Location, Position, Range, SymbolInformation, SymbolKind } from 'vscode-languageserver';
-import VSCodeUri from 'vscode-uri';
+// import { Location, Position, Range, SymbolInformation, SymbolKind } from 'vscode-languageserver';
+// import VSCodeUri from 'vscode-uri';
 
 import * as AnalyzerNodeInfo from '../analyzer/analyzerNodeInfo';
 import { Declaration, DeclarationCategory } from '../analyzer/declaration';

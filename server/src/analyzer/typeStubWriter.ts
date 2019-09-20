@@ -8,8 +8,6 @@
 * and analyzed python source file.
 */
 
-import * as fs from 'fs';
-
 import StringMap from '../common/stringMap';
 import { ArgumentCategory, ArgumentNode, AssignmentNode, AugmentedAssignmentExpressionNode,
     ClassNode, DecoratorNode, ExpressionNode, ForNode, FunctionNode, IfNode,

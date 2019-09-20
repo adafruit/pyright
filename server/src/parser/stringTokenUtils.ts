@@ -8,7 +8,7 @@
 * literal values.
 */
 
-import Char from 'typescript-char';
+import Char from './characters';
 
 import { StringToken, StringTokenFlags } from './tokenizerTypes';
 

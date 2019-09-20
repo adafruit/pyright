@@ -8,7 +8,7 @@
 */
 
 import * as assert from 'assert';
-import * as fs from 'fs';
+//import * as fs from 'fs';
 import { CompletionList, SymbolInformation } from 'vscode-languageserver';
 
 import { ConfigOptions, DiagnosticSettings, ExecutionEnvironment,

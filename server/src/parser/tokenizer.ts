@@ -10,11 +10,10 @@
 * Converts a Python program text stream into a stream of tokens.
 */
 
-import Char from 'typescript-char';
 
 import { TextRange } from '../common/textRange';
 import { TextRangeCollection } from '../common/textRangeCollection';
-import { isBinary, isDecimal, isHex, isIdentifierChar, isIdentifierStartChar, isOctal } from './characters';
+import { Char, isBinary, isDecimal, isHex, isIdentifierChar, isIdentifierStartChar, isOctal } from './characters';
 import { CharacterStream } from './characterStream';
 import { Comment, DedentToken, IdentifierToken, IndentToken, KeywordToken,
     KeywordType, NewLineToken, NewLineType, NumberToken, OperatorFlags, OperatorToken,

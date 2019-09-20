@@ -8,8 +8,8 @@
 * a list of zero or more text completions that apply in the context.
 */
 
-import { CompletionItem, CompletionItemKind, CompletionList,
-    MarkupKind, TextEdit } from 'vscode-languageserver';
+// import { CompletionItem, CompletionItemKind, CompletionList,
+//     MarkupKind, TextEdit } from 'vscode-languageserver';
 
 import { ImportMap } from '../analyzer/analyzerFileInfo';
 import * as AnalyzerNodeInfo from '../analyzer/analyzerNodeInfo';

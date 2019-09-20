@@ -8,7 +8,7 @@
 * Python files.
 */
 
-import * as fs from 'fs';
+// import * as fs from 'fs';
 import { CompletionList, SymbolInformation } from 'vscode-languageserver';
 
 import { CommandLineOptions } from '../common/commandLineOptions';
@@ -26,7 +26,6 @@ import { HoverResults } from '../languageService/hoverProvider';
 import { SignatureHelpResults } from '../languageService/signatureHelpProvider';
 import { ImportedModuleDescriptor, ImportResolver } from './importResolver';
 import { MaxAnalysisTime, Program } from './program';
-import * as PythonPathUtils from './pythonPathUtils';
 
 const _defaultConfigFileName = 'pyrightconfig.json';
 
@@ -351,49 +350,6 @@ export class AnalyzerService {
                     this._console.log(
                         `venv ${ configOptions.defaultVenv } subdirectory not found ` +
                         `in venv path ${ configOptions.venvPath }.`);
-                } else {
-                    const importFailureInfo: string[] = [];
-                    if (PythonPathUtils.findPythonSearchPaths(configOptions, undefined,
-                            importFailureInfo) === undefined) {
-
-                        this._console.log(
-                            `site-packages directory cannot be located for venvPath ` +
-                            `${ configOptions.venvPath } and venv ${ configOptions.defaultVenv }.`);
-
-                        if (configOptions.verboseOutput) {
-                            importFailureInfo.forEach(diag => {
-                                this._console.log(`  ${ diag }`);
-                            });
-                        }
-                    }
-                }
-            }
-        } else {
-            const importFailureInfo: string[] = [];
-            const pythonPaths = PythonPathUtils.getPythonPathFromPythonInterpreter(
-                configOptions.pythonPath, importFailureInfo);
-            if (pythonPaths.length === 0) {
-                if (configOptions.verboseOutput) {
-                    this._console.log(
-                        `No search paths found for configured python interpreter.`);
-                }
-            } else {
-                if (configOptions.verboseOutput) {
-                    this._console.log(
-                        `Search paths found for configured python interpreter:`);
-                    pythonPaths.forEach(path => {
-                        this._console.log(`  ${ path }`);
-                    });
-                }
-            }
-
-            if (configOptions.verboseOutput) {
-                if (importFailureInfo.length > 0) {
-                    this._console.log(
-                        `When attempting to get search paths from python interpreter:`);
-                    importFailureInfo.forEach(diag => {
-                        this._console.log(`  ${ diag }`);
-                    });
                 }
             }
         }

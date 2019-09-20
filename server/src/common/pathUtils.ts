@@ -7,9 +7,10 @@
 * Pathname utility functions.
 */
 
-import * as fs from 'fs';
+//import * as fs from 'fs';
 import * as path from 'path';
-import Char from 'typescript-char';
+
+import {Char} from '../parser/characters';
 
 export interface FileSpec {
     // File specs can contain wildcard characters (**, *, ?). This

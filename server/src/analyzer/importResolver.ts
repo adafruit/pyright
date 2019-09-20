@@ -8,7 +8,7 @@
 * runtime rules of Python.
 */
 
-import * as fs from 'fs';
+// import * as fs from 'fs';
 
 import { ConfigOptions, ExecutionEnvironment } from '../common/configOptions';
 import { combinePaths, ensureTrailingDirectorySeparator, getDirectoryPath, getFileExtension, getFileSystemEntries,
@@ -381,8 +381,7 @@ export class ImportResolver {
 
         // Find the site packages for the configured virtual environment.
         if (this._cachedPythonSearchPaths[cacheKey] === undefined) {
-            this._cachedPythonSearchPaths[cacheKey] = PythonPathUtils.findPythonSearchPaths(
-                this._configOptions, execEnv.venv, importFailureInfo) || [];
+            this._cachedPythonSearchPaths[cacheKey] = [];
         }
 
         return this._cachedPythonSearchPaths[cacheKey];
