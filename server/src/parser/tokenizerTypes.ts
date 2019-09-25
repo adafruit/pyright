@@ -326,10 +326,11 @@ export interface NumberToken extends Token {
     readonly value: number;
     readonly isInteger: boolean;
     radix: number;
+    readonly stringValue: string;
 }
 
 export namespace NumberToken {
-    export function create(start: number, length: number, value: number, radix: number, isInteger: boolean,
+    export function create(start: number, length: number, stringValue: string, value: number, radix: number, isInteger: boolean,
             comments: Comment[] | undefined) {
 
         const token: NumberToken = {
@@ -339,6 +340,7 @@ export namespace NumberToken {
             isInteger,
             radix,
             value,
+            stringValue,
             comments
         };
 
