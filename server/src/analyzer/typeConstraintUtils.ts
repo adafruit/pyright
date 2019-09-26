@@ -37,7 +37,7 @@ export function combineTypeConstraints(tcLists: TypeConstraint[][]): TypeConstra
 
                 // Since the lists were deduped, we should have found at most one
                 // TC that matched this expression. Get its type.
-                assert(splits[splitIndex][0].length <= 1);
+                assert.ok(splits[splitIndex][0].length <= 1);
                 if (splits[splitIndex][0].length > 0) {
                     typesToCombine.push(splits[splitIndex][0][0].getType());
                     if (splits[splitIndex][0][0].isConditional()) {
@@ -78,7 +78,7 @@ export function dedupeTypeConstraints(tcList: TypeConstraint[],
         const expression = remainingList[0].getExpression();
         const [inList, outList] = _splitList(remainingList, expression);
 
-        assert(inList.length > 0);
+        assert.ok(inList.length > 0);
 
         let combinedTc = inList[0];
         let hitUnconditionalTc = !combinedTc.isConditional();

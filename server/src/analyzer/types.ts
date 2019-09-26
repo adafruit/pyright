@@ -597,7 +597,7 @@ export namespace FunctionType {
         const newFunction = create(type.details.flags, type.details.docString);
         newFunction.details = type.details;
 
-        assert(specializedTypes.parameterTypes.length === type.details.parameters.length);
+        assert.ok(specializedTypes.parameterTypes.length === type.details.parameters.length);
         newFunction.specializedTypes = specializedTypes;
 
         return newFunction;
@@ -672,14 +672,14 @@ export namespace FunctionType {
     }
 
     export function setParameterType(type: FunctionType, index: number, paramType: Type): boolean {
-        assert(index < type.details.parameters.length);
+        assert.ok(index < type.details.parameters.length);
         const typeChanged = !isTypeSame(paramType, type.details.parameters[index].type);
         type.details.parameters[index].type = paramType;
         return typeChanged;
     }
 
     export function getEffectiveParameterType(type: FunctionType, index: number): Type {
-        assert(index < type.details.parameters.length);
+        assert.ok(index < type.details.parameters.length);
         if (type.specializedTypes) {
             return type.specializedTypes.parameterTypes[index];
         }
@@ -850,8 +850,8 @@ export namespace UnionType {
 
     export function addTypes(unionType: UnionType, subtypes: Type[]) {
         for (const newType of subtypes) {
-            assert(newType.category !== TypeCategory.Union);
-            assert(newType.category !== TypeCategory.Never);
+            assert.ok(newType.category !== TypeCategory.Union);
+            assert.ok(newType.category !== TypeCategory.Never);
             unionType.subtypes.push(newType);
         }
     }
